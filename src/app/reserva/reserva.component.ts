@@ -24,13 +24,13 @@ export class ReservaComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
 
-    // 🔹 Carregar dados do localStorage ao iniciar
+   
     const dadosSalvos = localStorage.getItem('reservaForm');
     if (dadosSalvos) {
       this.reservaForm.patchValue(JSON.parse(dadosSalvos));
     }
 
-    // 🔹 Salvar automaticamente no localStorage quando o formulário mudar
+    
     this.reservaForm.valueChanges.subscribe(valor => {
       localStorage.setItem('reservaForm', JSON.stringify(valor));
     });
@@ -45,7 +45,7 @@ export class ReservaComponent implements OnInit {
     }
   }
 
-  // 🔹 Validação personalizada de data
+  
   dataInvalida(): boolean {
     const ida = new Date(this.reservaForm.get('dataIda')?.value);
     const volta = new Date(this.reservaForm.get('dataVolta')?.value);
