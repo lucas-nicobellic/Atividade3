@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Sistema de Reserva de Viagens ✈️</h2>
+
+  <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()">
+
+    <!-- DESTINO -->
+    <label>Destino:</label>
+    <select formControlName="destino">
+      <option value="">Selecione um destino</option>
+      <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
+    </select>
+    <div *ngIf="reservaForm.get('destino')?.invalid && reservaForm.get('destino')?.touched" class="erro">
+      O destino é obrigatório.
+    </div>
+
+    <!-- DATA DE IDA -->
+    <label>Data de Ida:</label>
+    <input type="date" formControlName="dataIda">
+    <div *ngIf="reservaForm.get('dataIda')?.invalid && reservaForm.get('dataIda')?.touched" class="erro">
+      A data de ida é obrigatória.
+    </div>
+
+    <!-- DATA DE VOLTA -->
+    <label>Data de Volta:</label>
+    <input type="date" formControlName="dataVolta">
+    <div *ngIf="reservaForm.get('dataVolta')?.invalid && reservaForm.get('dataVolta')?.touched" class="erro">
+      A data de volta é obrigatória.
+    </div>
+    <div *ngIf="!reservaForm.get('dataVolta')?.invalid && dataInvalida()" class="erro">
+      A data de volta deve ser posterior à data de ida.
+    </div>
+
+    <!-- PASSAGEIROS -->
+    <label>Número de Passageiros:</label>
+    <input type="number" formControlName="passageiros" min="1" max="5">
+    <div *ngIf="reservaForm.get('passageiros')?.errors?.['min'] || reservaForm.get('passageiros')?.errors?.['max']" class="erro">
+      O número de passageiros deve estar entre 1 e 5.
+    </div>
+
+    <!-- EMAIL -->
+    <label>E-mail de Contato:</label>
+    <input type="email" formControlName="email">
+    <div *ngIf="reservaForm.get('email')?.invalid && reservaForm.get('email')?.touched" class="erro">
+      Insira um e-mail válido.
+    </div>
+
+    <button type="submit" [disabled]="reservaForm.invalid">Enviar Reserva</button>
+  </form>
+</div>
